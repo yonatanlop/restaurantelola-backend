@@ -1,0 +1,272 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║         RESTAURANTE DOÑA LOLA - SISTEMA POS                    ║
+║         Guía Rápida de Uso                                     ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════
+  PASO 1: INSTALACIÓN (Solo la primera vez)
+═══════════════════════════════════════════════════════════════════
+
+1. Hacer DOBLE CLIC en:
+   
+   📁 INSTALAR_Y_CONFIGURAR.bat
+
+2. Seguir las instrucciones en pantalla
+
+3. Esperar 5-10 minutos a que termine
+
+4. ¡Listo! El sistema está instalado
+
+
+═══════════════════════════════════════════════════════════════════
+  PASO 2: INICIAR EL SISTEMA (Cada vez que lo uses)
+═══════════════════════════════════════════════════════════════════
+
+Tienes 4 OPCIONES (elige la que prefieras):
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 1: Script BAT (Recomendado - Más Rápido)               │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Hacer DOBLE CLIC en:                                          │
+│  📁 iniciar-restaurante-lola.bat                               │
+│                                                                │
+│  ✓ Muy rápido                                                  │
+│  ✓ Funciona siempre                                            │
+│  ✓ No requiere nada adicional                                  │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 2: PowerShell (Más Robusto)                            │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  CLIC DERECHO en:                                              │
+│  📁 iniciar-restaurante-lola.ps1                               │
+│  → Seleccionar "Ejecutar con PowerShell"                       │
+│                                                                │
+│  ✓ Mejor manejo de errores                                     │
+│  ✓ Interfaz con colores                                        │
+│  ✓ Detecta problemas automáticamente                           │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 3: Launcher con Interfaz Gráfica (Más Profesional)     │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Hacer DOBLE CLIC en:                                          │
+│  📁 RestauranteLola.jar                                        │
+│                                                                │
+│  ✓ Interfaz gráfica bonita                                     │
+│  ✓ Botones de inicio/detener                                   │
+│  ✓ Logs en tiempo real                                         │
+│  ✓ Barra de progreso                                           │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN 4: Acceso Directo del Escritorio                       │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Hacer DOBLE CLIC en el icono del escritorio:                 │
+│  🖥️ Restaurante Doña Lola                                      │
+│                                                                │
+│  (Si lo creaste durante la instalación)                        │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════
+  PASO 3: ESPERAR A QUE INICIE
+═══════════════════════════════════════════════════════════════════
+
+⏱️  Espera 30-60 segundos
+
+El sistema abrirá automáticamente tu navegador en:
+🌐 http://localhost:3000
+
+Si no se abre automáticamente, abre manualmente:
+http://localhost:3000
+
+
+═══════════════════════════════════════════════════════════════════
+  PASO 4: INICIAR SESIÓN
+═══════════════════════════════════════════════════════════════════
+
+Usuarios por defecto:
+
+┌────────────────────────────────────────────────────────────────┐
+│ ADMINISTRADOR (Dueño)                                          │
+├────────────────────────────────────────────────────────────────┤
+│ Usuario:     dueno                                             │
+│ Contraseña:  dueno123                                          │
+│                                                                │
+│ Permisos: Acceso total al sistema                             │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ CAJERO                                                         │
+├────────────────────────────────────────────────────────────────┤
+│ Usuario:     cajero                                            │
+│ Contraseña:  cajero123                                         │
+│                                                                │
+│ Permisos: Ventas, consultas básicas                           │
+└────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════
+  PASO 5: USAR EL SISTEMA
+═══════════════════════════════════════════════════════════════════
+
+El sistema incluye:
+
+✓ Sistema POS (Punto de Venta)
+✓ Gestión de Menú y Platos
+✓ Control de Inventario
+✓ Registro de Compras
+✓ Gestión de Empleados
+✓ Cálculo de Nómina
+✓ Contabilidad de Caja
+✓ Reportes en Excel y PDF
+✓ Dashboard con Indicadores
+✓ Impresión de Tickets
+✓ Gestión de Mesas
+✓ Auditoría de Operaciones
+
+
+═══════════════════════════════════════════════════════════════════
+  PASO 6: DETENER EL SISTEMA (Cuando termines)
+═══════════════════════════════════════════════════════════════════
+
+Tienes 3 OPCIONES:
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN A: Script Automático (Más Fácil)                       │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Hacer DOBLE CLIC en:                                          │
+│  📁 detener-sistema.bat                                        │
+│                                                                │
+│  ✓ Detiene todo automáticamente                                │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN B: Manual                                               │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  1. Cerrar las ventanas de consola que se abrieron            │
+│  2. O presionar Ctrl+C en cada ventana                         │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ OPCIÓN C: Desde el Launcher GUI                               │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Hacer clic en el botón: "Detener Sistema"                    │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════
+  PROBLEMAS COMUNES Y SOLUCIONES
+═══════════════════════════════════════════════════════════════════
+
+┌────────────────────────────────────────────────────────────────┐
+│ PROBLEMA: "Puerto 8080 ya está en uso"                        │
+├────────────────────────────────────────────────────────────────┤
+│ SOLUCIÓN:                                                      │
+│   1. Ejecutar: detener-sistema.bat                            │
+│   2. O reiniciar la computadora                                │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ PROBLEMA: "PostgreSQL no está corriendo"                      │
+├────────────────────────────────────────────────────────────────┤
+│ SOLUCIÓN:                                                      │
+│   1. Abrir Servicios de Windows (services.msc)                │
+│   2. Buscar "postgresql"                                       │
+│   3. Clic derecho → Iniciar                                    │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ PROBLEMA: "No se abre el navegador"                           │
+├────────────────────────────────────────────────────────────────┤
+│ SOLUCIÓN:                                                      │
+│   Abrir manualmente: http://localhost:3000                    │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│ PROBLEMA: "Error al iniciar"                                  │
+├────────────────────────────────────────────────────────────────┤
+│ SOLUCIÓN:                                                      │
+│   1. Ver los mensajes de error en la consola                  │
+│   2. Verificar que Java, Node.js y PostgreSQL estén           │
+│      instalados                                                │
+│   3. Ejecutar nuevamente: INSTALAR_Y_CONFIGURAR.bat           │
+└────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════
+  ARCHIVOS IMPORTANTES
+═══════════════════════════════════════════════════════════════════
+
+📁 INSTALAR_Y_CONFIGURAR.bat    → Instalador automático
+📁 iniciar-restaurante-lola.bat → Iniciar sistema (BAT)
+📁 iniciar-restaurante-lola.ps1 → Iniciar sistema (PowerShell)
+📁 RestauranteLola.jar          → Launcher con GUI
+📁 detener-sistema.bat          → Detener sistema
+📄 INICIO_RAPIDO.md             → Guía rápida
+📄 INSTRUCCIONES_INICIO.md      → Documentación completa
+📄 COMO_USAR_EL_SISTEMA.txt     → Este archivo
+
+
+═══════════════════════════════════════════════════════════════════
+  URLS DEL SISTEMA
+═══════════════════════════════════════════════════════════════════
+
+Frontend (Interfaz):  http://localhost:3000
+Backend (API):        http://localhost:8080
+Base de Datos:        localhost:5432
+
+
+═══════════════════════════════════════════════════════════════════
+  RESUMEN RÁPIDO
+═══════════════════════════════════════════════════════════════════
+
+1️⃣  Primera vez:
+    → Doble clic en: INSTALAR_Y_CONFIGURAR.bat
+    → Esperar 5-10 minutos
+
+2️⃣  Iniciar sistema:
+    → Doble clic en: iniciar-restaurante-lola.bat
+    → Esperar 30-60 segundos
+
+3️⃣  Usar sistema:
+    → Abrir: http://localhost:3000
+    → Login: dueno / dueno123
+
+4️⃣  Detener sistema:
+    → Doble clic en: detener-sistema.bat
+
+
+═══════════════════════════════════════════════════════════════════
+  ¿NECESITAS MÁS AYUDA?
+═══════════════════════════════════════════════════════════════════
+
+Consulta estos archivos:
+
+📖 INICIO_RAPIDO.md          → Guía rápida con imágenes
+📖 INSTRUCCIONES_INICIO.md   → Documentación completa
+📖 RESUMEN_ARCHIVOS_CREADOS.md → Lista de todos los archivos
+
+
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║              ¡DISFRUTA DEL SISTEMA! 🍽️                         ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝

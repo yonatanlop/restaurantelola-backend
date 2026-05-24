@@ -1,0 +1,49 @@
+# Server Configuration
+server.port=8080
+server.address=0.0.0.0
+
+# PostgreSQL Configuration — copiar como application.properties y completar con tus datos
+spring.datasource.url=jdbc:postgresql://localhost:5432/contabilidadRestaurante?connectTimeout=10&socketTimeout=30&tcpKeepAlive=true
+spring.datasource.username=TU_USUARIO_POSTGRES
+spring.datasource.password=TU_CONTRASENA_POSTGRES
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# HikariCP Connection Pool Configuration (Optimizado para hardware limitado)
+spring.datasource.hikari.minimum-idle=2
+spring.datasource.hikari.maximum-pool-size=5
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.initialization-fail-timeout=90000
+spring.datasource.hikari.max-lifetime=600000
+spring.datasource.hikari.idle-timeout=300000
+spring.datasource.hikari.connection-test-query=SELECT 1
+spring.datasource.hikari.validation-timeout=5000
+spring.datasource.hikari.leak-detection-threshold=60000
+
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.transaction.default-timeout=60
+spring.jpa.properties.hibernate.jdbc.time_zone=UTC
+spring.jpa.properties.hibernate.connection.provider_disables_autocommit=false
+
+# Application Name
+spring.application.name=Restaurante Doña Lola
+
+# JWT Configuration — usar una clave larga y aleatoria en producción
+jwt.secret=CAMBIA_ESTA_CLAVE_POR_UNA_SECRETA_LARGA
+jwt.expiration=86400000
+
+# Propinas (HU-014)
+propinas.enabled=false
+
+# Static Resources (Frontend)
+spring.web.resources.static-locations=classpath:/static/
+
+# Logging
+logging.level.com.tialola=DEBUG
+
+# Caja Registradora
+caja.registradora.puerto=COM1
+caja.registradora.habilitada=true
