@@ -1,0 +1,12 @@
+target/
+.git/
+.idea/
+.vscode/
+.claude/
+*.iml
+tialola-frontend/
+doc/
+database/
+*.md
+.env
+src/main/resources/application.properties

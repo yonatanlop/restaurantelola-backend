@@ -22,6 +22,9 @@ mvnw.cmd
 src/main/resources/application.properties
 application-local.properties
 
+# Docker — credenciales locales, usar .env.example como base
+.env
+
 # Frontend (tiene su propio repositorio)
 tialola-frontend/
 
