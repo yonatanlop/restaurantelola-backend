@@ -40,19 +40,46 @@ correr:
 Es idempotente — se puede correr las veces que haga falta sin duplicar nada
 ni afectar el sitio de los otros proyectos.
 
-## Orden de despliegue en la VM
+## Primer despliegue en la VM
+
+Las imágenes ya vienen construidas por GitHub Actions (`.github/workflows/build-image.yml`
+en este repo y en el de `tialola-frontend`) y publicadas en ghcr.io, así que
+**solo hace falta clonar este repo** — el de `tialola-frontend` no se clona
+en la VM, su build ya está empaquetado en la imagen.
 
 ```bash
 git clone <url-del-repo-backend> restaurantelola
 cd restaurantelola
-git clone <url-del-repo-frontend> tialola-frontend
 
 cp .env.example .env   # completar POSTGRES_PASSWORD y JWT_SECRET reales
 
-docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d --build
+docker network inspect edge >/dev/null 2>&1 || docker network create edge
+
+docker compose -f docker-compose.deploy.yml pull
+docker compose -f docker-compose.deploy.yml up -d
 
 ./deploy/patch-shared-caddy.sh
 ```
 
 Verificar: `https://restaurantelola.duckdns.org/` y que los demás dominios
 (`gamificaciones`, `pedidoavoz`, `detectoria`) sigan funcionando igual.
+
+## Actualizar después de un cambio de código (mismo flujo que gamificacion-fundacion)
+
+1. `git push origin master` en el repo que cambió (backend o frontend) → el
+   workflow de GitHub Actions de ese repo construye y publica la imagen
+   nueva en ghcr.io (~1-2 min). Revisar en la pestaña "Actions" de ese repo.
+2. Por SSH en la VM, dentro de `~/restaurantelola`:
+   - Si el cambio fue solo código de la app (no tocó `docker-compose*.yml`
+     ni `.env`):
+     ```bash
+     docker compose -f docker-compose.deploy.yml pull backend   # o frontend
+     docker compose -f docker-compose.deploy.yml up -d backend  # o frontend
+     ```
+     (`pull`/`up -d` solo del servicio que cambió; los demás siguen
+     corriendo sin tocarse)
+   - Si cambió el propio `docker-compose.deploy.yml`, `.env.example` o algo
+     en `deploy/`: esos archivos viven en el checkout de git de la VM, no
+     dentro de las imágenes, así que primero `git pull` en `~/restaurantelola`
+     antes de lo anterior.
+3. Verificar con `curl` que el backend y la web respondan bien.

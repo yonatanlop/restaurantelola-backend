@@ -1,27 +1,66 @@
-# Overlay para desplegar en un servidor donde 80/443 ya estan ocupados por el
-# Caddy de otro proyecto (ver deploy/shared-caddy.md).
+# Compose para DESPLIEGUE (Oracle Cloud u otro servidor).
+# Usa las imagenes ya construidas por GitHub Actions en ghcr.io (ver
+# .github/workflows/build-image.yml de este repo y del de tialola-frontend)
+# — no compila nada en el servidor.
 #
-#   docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d --build
+#   docker compose -f docker-compose.deploy.yml pull
+#   docker compose -f docker-compose.deploy.yml up -d
 #
-# "frontend" deja de publicar su puerto al host: se conecta a la red externa
-# compartida "edge" para que ese Caddy lo alcance por nombre de contenedor,
-# con un container_name unico ("restaurantelola-web") para evitar colisiones
-# de resolucion DNS con el servicio "web"/"frontend" de otros proyectos en
-# esa misma red compartida (ver incidente documentado en deploy/shared-caddy.md).
-# "backend" tampoco publica su puerto: el propio nginx de "frontend" ya hace
-# de proxy hacia el backend para /api (igual que en local), asi que todo el
-# trafico externo entra por Caddy -> frontend -> backend, sin exponer el
-# backend en HTTP plano directamente a internet.
+# El frontend NO publica ningun puerto al host: en este servidor ya hay un
+# Caddy de otro proyecto ocupando 80/443, asi que se conecta a la red externa
+# "edge" para que ese Caddy lo alcance como reverse proxy, con un
+# container_name unico para evitar colisiones de resolucion DNS con el
+# servicio "web" de otros proyectos en esa misma red compartida (ver
+# deploy/shared-caddy.md). "backend" tampoco publica puerto: todo el trafico
+# externo entra por Caddy -> frontend -> backend.
 #
-# Requiere que exista la red externa: docker network create edge
+# Requiere un archivo .env en el mismo directorio (ver .env.example) y que
+# exista la red externa: docker network create edge
+#
+# Solo hace falta clonar ESTE repo en la VM: las imagenes ya incluyen el
+# frontend compilado, no hace falta el repo de tialola-frontend ahi.
 
 services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-contabilidadRestaurante}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?falta POSTGRES_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   backend:
-    ports: !reset []
+    image: ghcr.io/yonatanlop/restaurantelola-backend:${IMAGE_TAG:-latest}
+    container_name: restaurantelola-backend
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-contabilidadRestaurante}?connectTimeout=10&socketTimeout=30&tcpKeepAlive=true
+      DB_USERNAME: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?falta POSTGRES_PASSWORD en .env}
+      JWT_SECRET: ${JWT_SECRET:?falta JWT_SECRET en .env}
+      PROPINAS_ENABLED: ${PROPINAS_ENABLED:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8080"
 
   frontend:
+    image: ghcr.io/yonatanlop/restaurantelola-frontend:${IMAGE_TAG:-latest}
     container_name: restaurantelola-web
-    ports: !reset []
+    restart: unless-stopped
+    depends_on:
+      - backend
+    expose:
+      - "80"
     networks:
       - default
       - edge
@@ -29,3 +68,6 @@ services:
 networks:
   edge:
     external: true
+
+volumes:
+  pgdata:
