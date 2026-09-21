@@ -10,10 +10,11 @@ COPY src ./src
 RUN mvn -B -q clean package -DskipTests
 
 # ---- Etapa de runtime ----
-FROM eclipse-temurin:17-jre-alpine
+# jre-alpine no publica build para arm64 (VM de despliegue), se usa jammy
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN groupadd -r spring && useradd -r -g spring spring
 COPY --from=build /app/target/*.jar app.jar
 USER spring
 
