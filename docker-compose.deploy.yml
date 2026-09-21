@@ -31,8 +31,11 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-contabilidadRestaurante}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?falta POSTGRES_PASSWORD en .env}
+    # A partir de la imagen v18, el punto de montaje recomendado es un nivel
+    # arriba de /data (guarda los datos en una subcarpeta por version, ver
+    # deploy/migrar-datos.md)
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
