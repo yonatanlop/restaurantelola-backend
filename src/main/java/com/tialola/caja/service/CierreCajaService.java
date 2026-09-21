@@ -63,32 +63,30 @@ public class CierreCajaService {
                 .map(MovimientoCaja::getMonto)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal saldoEsperado = saldoInicial.add(totalVentas).add(ingresos).subtract(egresos);
-        // El efectivo esperado es el saldo esperado (asumiendo que todo es efectivo inicialmente)
-        // Se actualizará cuando se cierre el cierre con el conteo real
-        BigDecimal efectivoEsperado = saldoEsperado;
-        
         // Calcular total de ventas del día y por método de pago
         List<Venta> ventasDelDia = ventaRepository.findByFechaBetween(inicio, fin);
         BigDecimal totalVentas = ventasDelDia.stream()
                 .map(Venta::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         // Calcular ventas por método de pago
         BigDecimal ventasEfectivo = ventasDelDia.stream()
                 .filter(v -> "EFECTIVO".equalsIgnoreCase(v.getMetodoPago()))
                 .map(Venta::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal ventasCredito = ventasDelDia.stream()
                 .filter(v -> "CREDITO".equalsIgnoreCase(v.getMetodoPago()))
                 .map(Venta::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal ventasTransferencia = ventasDelDia.stream()
                 .filter(v -> "TRANSFERENCIA".equalsIgnoreCase(v.getMetodoPago()))
                 .map(Venta::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal saldoEsperado = saldoInicial.add(totalVentas).add(ingresos).subtract(egresos);
+        BigDecimal efectivoEsperado = saldoEsperado;
 
         CierreCaja cierre = new CierreCaja();
         cierre.setFecha(fecha);

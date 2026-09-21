@@ -70,6 +70,8 @@ npm run build
 npm preview
 ```
 
+`npm run build` runs `tsc` before `vite build`, so it also serves as the frontend type-check. There is no configured test runner or lint script on either side (no `spring-boot-starter-test` in `pom.xml`, no test/lint entries in `package.json`, and no test files in the repo) — don't assume `mvn test` or `npm test` will do anything meaningful.
+
 ### Full System Start
 The project includes multiple startup options documented in `doc/COMO_USAR_EL_SISTEMA.txt`:
 
@@ -95,10 +97,9 @@ The backend follows a **modular domain-driven structure** organized by business 
   - Mesa states: LIBRE, OCUPADA, RESERVADA, LIMPIEZA
   - Tracks current sale per table and occupation time
   
-- **`contabilidad/`** - Accounting and cash management (HU-013)
-  - Submodules: `ventas/` (sales), base accounting
-  - Cash drawer operations, payment methods, tips tracking
-  - Settlement and cash close operations
+- **`contabilidad/`** - Accounting and cash management
+  - Submodule `ventas/` (HU-001) has its own `config/controller/dto/mapper/model/repository/service` — the sales/POS domain lives here, separate from `mesas/`
+  - Payment methods and tips tracking; settlement and reporting
   
 - **`menu/`** - Menu management
   - Models: `Plato` (dishes), categories
@@ -133,6 +134,10 @@ The backend follows a **modular domain-driven structure** organized by business 
   
 - **`reportes/`** - Report generation
   - Excel and PDF export services
+
+A few top-level, non-domain files sit directly under `com.tialola/` rather than in a module: `controller/DashboardController.java`, `service/DashboardService.java`, `dto/DashboardDTO.java` (dashboard KPI aggregation), and `config/HikariMonitorConfig.java`.
+
+Most modules were built against a numbered user story (`HU-XXX`) and ship a `README_HU0XX.md` (or `README.md`) in their package root documenting the original requirements and endpoints (e.g. `auth/README.md` + `auth/README_HU016.md`, `mesas/README_HU011.md`, `auditoria/README_HU012.md`, `inventario/README_HU003.md`). Check the module directory for one before making non-trivial changes there — it's often more current and detailed than this file.
 
 #### Data Access Pattern
 - Each domain has `repository/` (Spring Data JPA interfaces)
@@ -188,10 +193,14 @@ styles/             # Global and feature-specific CSS
 ### Key Architectural Patterns
 
 #### Frontend
-- **Role-based Access Control:** `ProtectedRoute` component checks user roles (DUENO, CAJERO, ADMIN)
-- **Layout Separation:** Different UI layouts for different user roles (cashier view vs. owner advanced menu)
+- **Role-based Access Control:** `ProtectedRoute` (`app/guards/`) wraps route subtrees with `allowedRoles`; roles are `DUENO`, `CAJERO`, `ADMIN`. Route tree, defined in `app/routes/AppRouter.tsx`:
+  - `/cajero` (CAJERO, ADMIN) → `CajeroLayout` → `venta` (touchscreen POS, `VentaTactilPage`)
+  - `/dueno` (DUENO, ADMIN) → `DuenoLayout` (quick menu) → `dashboard`, `ventas-dia`
+  - `/dueno/avanzado` (DUENO, ADMIN) → `DuenoAvanzadoLayout` (full menu) → `menu`, `inventario`, `compras`, `nomina`, `contabilidad`, `cierre-caja`, `reportes`, `mesas`, `creditos`, `configuracion`, `auditoria`
+  - Unmatched paths and `/` redirect to `/login`
+- **Layout Separation:** Different UI layouts for different user roles (cashier view vs. owner quick/advanced menus)
 - **API Layer:** Centralized `shared/api` with Axios proxy to backend at `/api/*`
-- **Auth Context:** `AuthProvider` manages JWT token, user info, and session state
+- **Auth Context:** `AuthProvider` (`app/providers/`) manages JWT token, user info, and session state; exposes `hasRole()` for conditional UI, backed by `localStorage`
 - **Module Isolation:** Each feature module manages its own pages, services, and types
 
 #### Backend
