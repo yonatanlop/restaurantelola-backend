@@ -1,6 +1,9 @@
 services:
   db:
-    image: postgres:16-alpine
+    # 18 porque respaldar-base-datos.ps1 genera los dumps con la version de
+    # PostgreSQL instalada en cada equipo, y pg_restore no puede leer un
+    # dump mas nuevo que el propio servidor (ver deploy/migrar-datos.md)
+    image: postgres:18-alpine
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-contabilidadRestaurante}

@@ -25,6 +25,10 @@ application-local.properties
 # Docker — credenciales locales, usar .env.example como base
 .env
 
+# Respaldos de base de datos — contienen datos reales, nunca se suben
+backups/
+*.dump
+
 # Frontend (tiene su propio repositorio)
 tialola-frontend/
 
